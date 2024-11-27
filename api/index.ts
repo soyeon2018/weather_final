@@ -1,17 +1,14 @@
-const express = require("express");
-const request = require("request");
-const config = require("./api_key.js"); // API 키 불러오기
+var express = require("express");
+var app = express();
 
-const app = express();
-
-// 날씨 API 라우터
 app.get("/weather", function (req: any, res: any) {
   const { serviceKey, numOfRows, pageNo, base_date, base_time, nx, ny } =
     req.query;
 
-  const api_url =
+  var api_url =
     "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtNcst?";
-  const options = {
+  var request = require("request");
+  var options = {
     url: api_url,
     qs: { serviceKey, numOfRows, pageNo, base_date, base_time, nx, ny },
   };
@@ -22,15 +19,13 @@ app.get("/weather", function (req: any, res: any) {
       res.end(body);
     } else {
       res.status(response.statusCode).end();
-      console.log("Error:", response ? response.statusCode : error);
+      console.log("error = " + response.statusCode);
     }
   });
 });
 
-// 서버 실행
 app.listen(3000, function () {
-  console.log(`API Key is ready: ${config.WEATHER_API_KEY}`);
   console.log(
-    "http://127.0.0.1:3000/weather?serviceKey=API_KEY&numOfRows=10&pageNo=1&base_date=20241028&base_time=0600&nx=61&ny=125 app listening on port 3000!"
+    "http://127.0.0.1:3000/weather?serviceKey=http://127.0.0.1:3000/weather?serviceKey=HHRTZueeIvqo2g%2B3hUBslY9ebZIRfjc9P9YiX5ucVvBU2FoS%2FhiS1f5BgCuzOvGTyyyy3RUjOW%2FF%2Ffap5lkY%2BQ%3D%3D&numOfRows=10&pageNo=1&base_date=20241028&base_time=0600&nx=61&ny=125 app listening on port 3000!"
   );
 });
